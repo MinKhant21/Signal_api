@@ -1,7 +1,7 @@
 require('dotenv').config();
 import express  from "express";
 import cors from 'cors'
-import router from './router/index'
+import router from './router/auth'
 const app = express();
 
 app.use(cors({
@@ -18,6 +18,6 @@ app.use(cors({
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-app.use(process.env.API_PREFIX + "login" , router)
+app.use(router)
 
 module.exports = app
