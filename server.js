@@ -3,6 +3,7 @@ import express  from "express";
 import cors from 'cors'
 const bodyParser = require('body-parser')
 const authRouter = require('./src/router/auth')
+import { mongodbConnect } from "./src/database/config";
 const app = express();
 
 // app.use(cors({
@@ -21,7 +22,11 @@ app.use(bodyParser.json());
 
 app.use(authRouter)
 
-app.listen(4200,()=>{
-    console.log(`Server Running in http://localhost:${4200}`)
+mongodbConnect((client)=>{
+    app.listen(4200,()=>{
+        console.log(`Server Running in http://localhost:${4200}`)
+    })
 })
+
+
 
