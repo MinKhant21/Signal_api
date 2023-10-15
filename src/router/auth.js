@@ -9,7 +9,7 @@ authRouter.post('/api/register',(req,res,next)=>{
         data : req.body
     })
 })
-authRouter.get('/a',(req,res) => {
+authRouter.post('/verif',(req,res) => {
     res.send('<h1>h1</h1>')
 })
 

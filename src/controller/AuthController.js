@@ -14,8 +14,9 @@ exports.login = (req,res) => {
         const token = GenerateToken(result._id,result.phoneNumber,result.countryCode)
         res.json({
             status : "200",
-            message : "I have an account",
+            message : "You have an account",
             data : result,
+            otp : '123456',
             token : token
         })
     })
