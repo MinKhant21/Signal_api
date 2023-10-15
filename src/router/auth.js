@@ -1,14 +1,14 @@
 import express from "express";
-
+import { getDb } from "../database/config";
+import AuthController from '../controller/AuthController'
 const authRouter = express.Router()
 
-authRouter.post('/api/login',(req,res,next) => {
-    console.log(req.body)
+authRouter.post('/api/login',AuthController.login)
+authRouter.post('/api/register',(req,res,next)=>{
     res.json({
-        status:200,
+        data : req.body
     })
 })
-
 authRouter.get('/a',(req,res) => {
     res.send('<h1>h1</h1>')
 })
