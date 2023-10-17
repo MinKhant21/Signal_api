@@ -1,5 +1,5 @@
 const { getDb } = require("../database/config");
-
+const mongodb = require('mongodb')
 class User {
     phoneNumber;
     countryCode;
@@ -19,7 +19,17 @@ class User {
                 console.log(result)
             }
         })
-        
+    }
+    static all(_id){
+        const db = getDb()
+          return db.collection('users').find({_id:{$ne:new mongodb.ObjectId(_id)}}).toArray()
+         .then(users=>{
+            return users
+          })
+          .catch(error=>{
+            console.log(error)
+          })
+      
     }
 }
 

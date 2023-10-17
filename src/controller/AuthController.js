@@ -1,5 +1,5 @@
 import User from "../models/User"
-import GenerateToken from '../utli/generateToken'
+import GenerateToken from '../util/generateToken'
 exports.login = (req,res) => {
     let phoneNumber = req.body.phoneNumber
     let countryCode = req.body.countryCode
