@@ -1,8 +1,11 @@
 const { getDb } = require("../database/config");
 const mongodb = require('mongodb')
+const uuid = require('uuid')
 class User {
     phoneNumber;
     countryCode;
+    chatId = uuid.v4()
+
     constructor(phoneNumber,countryCode) {
         this.phoneNumber = phoneNumber
         this.countryCode = countryCode
