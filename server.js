@@ -2,7 +2,7 @@ require('dotenv').config();
 import express  from "express";
 import cors from 'cors'
 import { getDb, mongodbConnect } from "./src/database/config";
-
+import Message from "./src/models/message";
 const bodyParser = require('body-parser')
 const authRouter = require('./src/router/auth')
 const apiRouter = require('./src/router/api')
@@ -34,9 +34,20 @@ mongoose.connect(process.env.DATABASE_HOST)
         const io = require('./socket').init(server)
         io.on("connection",(socket)=>{
             console.log("Client Connected")
+
+            // Chat 
+
             socket.on('chat',(data)=>{
-                console.log(data)
-                io.sockets.emit('chat',data.message)
+                if(data){
+                    Message.create({
+                        form_userId:data.fromUser._id,
+                        to_userId:data.toUser._id,
+                        message : data.message
+                    }).then(createMessage=>{
+                        io.sockets.emit('chat',data.message)
+                    })
+                }
+               
             })
         })
     })
