@@ -6,4 +6,6 @@ const apiRouter = express.Router();
 
 apiRouter.get('/getUser',verifyToken,ApiController.getUser)
 
+apiRouter.get('/join-chat-room',ApiController.joinChatRoom)
+
 module.exports = apiRouter

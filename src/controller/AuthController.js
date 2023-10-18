@@ -34,32 +34,5 @@ exports.login = async (req,res) => {
                 })
             })
     }
-    // .then(result=>{
-        // console.log(result[0]._id)
-        // if(result[0]){
-       
-        // }
-       
-          
-            
-        
-    // })
-    
-    // user.findOne().then(result=>{
-    //     if(!result){
-    //         user.save()
-    //         .then(data=>{
-    //             console.log(data)
-    //         })
-    //     }
-    //     const token = GenerateToken(result._id,result.phoneNumber,result.countryCode)
-    //     res.json({
-    //         status : "200",
-    //         message : "You have an account",
-    //         data : result,
-    //         otp : '123456',
-    //         token : token
-    //     })
-    // })
     
 }
