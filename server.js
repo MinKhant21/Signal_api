@@ -1,10 +1,12 @@
 require('dotenv').config();
 import express  from "express";
 import cors from 'cors'
+import { getDb, mongodbConnect } from "./src/database/config";
+
 const bodyParser = require('body-parser')
 const authRouter = require('./src/router/auth')
 const apiRouter = require('./src/router/api')
-import { getDb, mongodbConnect } from "./src/database/config";
+const mongoose = require('mongoose')
 const app = express();
 
 // app.use(cors({
@@ -24,15 +26,26 @@ app.use(bodyParser.json());
 app.use(authRouter)
 app.use("/api",apiRouter)
 
-mongodbConnect(()=>{
-    let server = app.listen(4200,()=>{
-        console.log(`Server Running in http://localhost:${4200}`)
+mongoose.connect(process.env.DATABASE_HOST)
+    .then(result=>{
+        app.listen(4200,()=>{
+            console.log(`Server Running in http://localhost:${4200}`)
+        })
     })
-    const io = require('./socket').init(server)
-    io.on("connection",(socket)=>{
-        console.log("Client Connected")
-    })
+    .catch(e=>{
+        console.log(e)
 })
+
+
+// mongoose.connect(()=>{
+//     let server = app.listen(4200,()=>{
+//         console.log(`Server Running in http://localhost:${4200}`)
+//     })
+//     const io = require('./socket').init(server)
+//     io.on("connection",(socket)=>{
+//         console.log("Client Connected")
+//     })
+// })
 
 
 
