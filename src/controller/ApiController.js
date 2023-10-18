@@ -13,6 +13,18 @@ exports.getUser = async(req,res) => {
     
 }
 
+exports.myAccount = async(req,res) => {
+    let _id = req.query.userId
+    User.findOne({_id:_id})
+    .then(user=>{
+        res.json({
+            status : "200",
+            message : "My Account Info",
+            data : user
+        })
+    })
+}
+
 exports.joinChatRoom = async(req,res) =>{
     // let io = Socket.getIo();
     // io.on("connection",(socket)=>{
