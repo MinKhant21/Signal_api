@@ -28,8 +28,16 @@ app.use("/api",apiRouter)
 
 mongoose.connect(process.env.DATABASE_HOST)
     .then(result=>{
-        app.listen(4200,()=>{
+        let server = app.listen(4200,()=>{
             console.log(`Server Running in http://localhost:${4200}`)
+        })
+        const io = require('./socket').init(server)
+        io.on("connection",(socket)=>{
+            console.log("Client Connected")
+            socket.on('chat',(data)=>{
+                console.log(data)
+                io.sockets.emit('chat',data.message)
+            })
         })
     })
     .catch(e=>{
