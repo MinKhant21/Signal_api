@@ -1,4 +1,6 @@
 import User from "../models/User";
+import Message from "../models/message";
+
 const mongoose = require('mongoose')
 const Socket = require('../../socket')
 exports.getUser = async(req,res) => {
@@ -21,6 +23,18 @@ exports.myAccount = async(req,res) => {
             status : "200",
             message : "My Account Info",
             data : user
+        })
+    })
+}
+
+exports.history = async(req,res) => {
+    const fromUser = req.userId
+    let toUser =  req.query.id 
+    await Message.find({to_userId:toUser,form_userId:fromUser})
+    .then(result=>{
+        res.json({
+            status : "200",
+            messages : result
         })
     })
 }
