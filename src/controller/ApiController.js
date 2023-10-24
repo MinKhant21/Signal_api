@@ -1,5 +1,6 @@
 import User from "../models/User";
 import Message from "../models/message";
+import Room from "../models/room";
 
 const mongoose = require('mongoose')
 const Socket = require('../../socket')
@@ -28,10 +29,11 @@ exports.myAccount = async(req,res) => {
 }
 
 exports.history = async(req,res) => {
-    const fromUser = req.userId
+    const fromUser = req.userId 
     let toUser =  req.query.id 
     await Message.find({to_userId:toUser,form_userId:fromUser})
     .then(result=>{
+        console.log(result)
         res.json({
             status : "200",
             messages : result

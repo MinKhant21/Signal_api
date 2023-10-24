@@ -23,7 +23,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 
-app.use(authRouter)
+app.use(authRouter) 
 app.use("/api",apiRouter)
 
 mongoose.connect(process.env.DATABASE_HOST)

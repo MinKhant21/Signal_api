@@ -1,11 +1,9 @@
 import User from "../models/User"
 import GenerateToken from '../util/generateToken'
-const uuid = require('uuid')
 exports.login = async (req,res) => {
     let phoneNumber = req.body.phoneNumber
     let countryCode = req.body.countryCode
     let name = req.body.name
-    let chatId =  uuid.v4()
     let user = await User.findOne({phoneNumber : phoneNumber}).exec()
     if(user){
         const token = GenerateToken(user._id,user.phoneNumber,user.countryCode)
@@ -21,7 +19,6 @@ exports.login = async (req,res) => {
                 name : name,
                 countryCode:countryCode,
                 phoneNumber:phoneNumber,
-                chatId : chatId
             }).then(user=>{
                 console.log(user)
                 const token = GenerateToken(user._id,user.phoneNumber,user.countryCode,user.chatId)

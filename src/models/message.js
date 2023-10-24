@@ -3,12 +3,15 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const messageSchema = new Schema({
-    form_userId :{
-        type : String,
-    },
-    to_userId :{
-        type : String,
-    },
+    room_id :[{
+        type : Schema.Types.ObjectId, ref : "Room"
+    }],
+    form_userId :[{
+        type : Schema.Types.ObjectId, ref : "User"
+    }],
+    to_userId :[{
+        type : Schema.Types.ObjectId, ref : "User"
+    }],
     message:{
         type : String,
     }

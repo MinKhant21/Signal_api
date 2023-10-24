@@ -12,9 +12,7 @@ const userSchema = new Schema({
     phoneNumber :{
         type :String,
     },
-    chatId : {
-        type : String
-    }
+   
 })
 
 module.exports = mongoose.model('User',userSchema)
