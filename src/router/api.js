@@ -12,4 +12,6 @@ apiRouter.get('/history',verifyToken,ApiController.history)
 
 apiRouter.get('/join-chat-room',ApiController.joinChatRoom)
 
+apiRouter.post('/add-friend',verifyToken,ApiController.addFriend)
+
 module.exports = apiRouter

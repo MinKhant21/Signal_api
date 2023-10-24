@@ -41,6 +41,39 @@ exports.history = async(req,res) => {
     })
 }
 
+exports.addFriend = async (req,res) => {
+    const oneUser = req.userId 
+    const phoneNumber = req.body.phoneNumber
+
+    let user = await User.findOne({phoneNumber : phoneNumber }).exec()
+    if(!user){
+        return res.json({
+            message : "Phone Number does not registed"
+        })
+    }
+
+    let room = await Room.findOne({user_one_id : oneUser , user_two_id : user._id}).populate('user_one_id user_two_id').exec()
+    if(room){
+        return res.json({
+            status : "200",
+            message : "You Already Added ",
+            data : room
+        })
+    }
+
+    await Room.create({
+        user_one_id : oneUser , 
+        user_two_id : user._id
+    })
+    .then(room=>{
+        return res.json({
+            status : "200",
+            message : "Successfully Added",
+            data : room
+        })
+    })
+}
+
 exports.joinChatRoom = async(req,res) =>{
     // let io = Socket.getIo();
     // io.on("connection",(socket)=>{
