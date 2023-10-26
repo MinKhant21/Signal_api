@@ -1,7 +1,7 @@
 import User from "../models/User";
 import Message from "../models/message";
 import Room from "../models/room";
-
+import io from '../../socket'
 const mongoose = require('mongoose')
 const Socket = require('../../socket')
 exports.getUser = async(req,res) => {
@@ -84,6 +84,33 @@ exports.addFriend = async (req,res) => {
             data : room
         })
     })
+}
+
+exports.chatRoom = async(req,res) => {
+    let io = require('../../socket').getIo()
+    io.on("connection",(socket)=>{
+        console.log("Client Connected")
+        // Chat 
+        socket.on('chat',(data)=>{
+            if(data){
+                Message.create({
+                    form_userId:data.fromUser._id,
+                    to_userId:data.toUser._id,
+                    roomId : data.roomId,
+                    message : data.message
+                }).then(createMessage=>{
+                    io.sockets.emit('chat',data.message)
+               
+                })
+            }
+           
+        })
+    })
+
+         res.json({
+                        status : "200"
+                    })
+   
 }
 
 exports.joinChatRoom = async(req,res) =>{
