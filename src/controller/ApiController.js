@@ -6,13 +6,25 @@ const mongoose = require('mongoose')
 const Socket = require('../../socket')
 exports.getUser = async(req,res) => {
     const userId = req.userId
-     User.find({_id:{$ne:userId}}).then(users=>{
+    
+    Room.find({user_one_id : userId}).populate('user_one_id user_two_id')
+    .then(result=>{
         res.json({
         status : "200",
         message : "all User Fetched",
-        data : users
+        data : result
         })
     })
+
+    // Get All Users
+
+    //  User.find({_id:{$ne:userId}}).then(users=>{
+    //     res.json({
+    //     status : "200",
+    //     message : "all User Fetched",
+    //     data : users
+    //     })
+    // })
     
 }
 
