@@ -86,21 +86,19 @@ exports.addFriend = async (req,res) => {
     })
 }
 
-exports.chatRoom = async(req,res) => {
+exports.chatRoom = (req,res) => {
     let io = require('../../socket').getIo()
     io.on("connection",(socket)=>{
-        console.log("Client Connected")
         // Chat 
         socket.on('chat',(data)=>{
             if(data){
                 Message.create({
                     form_userId:data.fromUser._id,
                     to_userId:data.toUser._id,
-                    roomId : data.roomId,
+                    room_id : data.roomId,
                     message : data.message
                 }).then(createMessage=>{
                     io.sockets.emit('chat',data.message)
-               
                 })
             }
            
